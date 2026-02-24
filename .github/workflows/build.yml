@@ -24,14 +24,29 @@ jobs:
           # On first commit or workflow_dispatch: treat all as changed
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             CHANGED="${ALL_DBS[*]}"
+            INFRA_CHANGED=true
           elif git rev-parse HEAD~1 >/dev/null 2>&1; then
-            CHANGED=$(git diff --name-only HEAD~1 HEAD | grep "^databases/" | cut -d/ -f2 | sort -u || true)
+            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+            CHANGED=$(echo "$CHANGED_FILES" | grep "^databases/" | cut -d/ -f2 | sort -u || true)
+            # Rebuild all if Dockerfile, entrypoint, or workflow changed
+            if echo "$CHANGED_FILES" | grep -qE "^(Dockerfile|entrypoint\.sh|\.github/workflows/build\.yml)$"; then
+              INFRA_CHANGED=true
+            else
+              INFRA_CHANGED=false
+            fi
           else
             CHANGED="${ALL_DBS[*]}"
+            INFRA_CHANGED=true
           fi
 
           TO_BUILD=()
           for db in "${ALL_DBS[@]}"; do
+            # Build if infrastructure files changed (rebuild all)
+            if [ "$INFRA_CHANGED" = "true" ]; then
+              TO_BUILD+=("\"$db\"")
+              continue
+            fi
+
             # Build if database files changed
             if echo "$CHANGED" | grep -qx "$db"; then
               TO_BUILD+=("\"$db\"")

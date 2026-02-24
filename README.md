@@ -1,22 +1,29 @@
 # htlwrn-mssql
 
-Ready-to-use MSSQL 2022 Docker images for school database exercises.
+Pre-seeded MSSQL 2022 Docker images for database exercises. Pull an image and connect — the data is already there.
 
-One image, one tag per schema. Each container loads its schema directly into `master` — connect and query immediately.
+## Connect
+
+```
+Server:    localhost,1433
+User:      sa
+Password:  Htlwrn_1
+Database:  master
+```
 
 ## Available Tags
 
-| Tag | Tabellen |
-|-----|----------|
-| `airport` | Airline, Aircraft, Aircrew, Flight management |
+| Tag | Tables |
+|-----|--------|
+| `airport` | Airline, Aircraft, Aircrew, Flight |
 | `books` | Authors, Titles, TitlesAuthors |
 | `feuerwehr` | Competition, Troops, Persons, Ranks |
 | `flug` | Pilot, Flugzeug, Flughafen, Fliegt |
 | `imkerei` | Imker, Bienenstock, Koenigin, Arbeiterin, Felder |
 | `lager` | Artikel, Lager, Lieferung |
-| `lt` | Lieferanten, Teile, LT (classic relational DB example) |
+| `lt` | Lieferanten, Teile, LT |
 | `mensa` | Speise, Menue, Zutat, Bestellung, Serviert |
-| `mondial` | Country, Organization, isMember (world geographic data) |
+| `mondial` | Country, Organization, isMember |
 | `suppliers` | Suppliers, Parts, SupplierParts |
 | `tankstelle` | Kraftstoff, Zapfsaeule, Tagespreis, Verkauf |
 
@@ -24,33 +31,13 @@ One image, one tag per schema. Each container loads its schema directly into `ma
 
 ```bash
 docker run -p 1433:1433 --rm ghcr.io/OWNER/htlwrn-mssql:feuerwehr
-docker run -p 1433:1433 --rm ghcr.io/OWNER/htlwrn-mssql:airport
-docker run -p 1433:1433 --rm ghcr.io/OWNER/htlwrn-mssql:imkerei
 ```
 
-Connect with Azure Data Studio or SSMS:
-- **Server:** `localhost,1433`
-- **User:** `sa`
-- **Password:** `YourStrong!Passw0rd`
-- **Database:** `master`
+Replace `OWNER` with the GitHub username hosting this repo.
 
-## Local Build
+## Adding a New Database
 
-```bash
-docker build --build-arg DB_NAME=tankstelle -t htlwrn-mssql:tankstelle .
-docker run -p 1433:1433 --rm htlwrn-mssql:tankstelle
-```
+1. Create `databases/<name>/init.sql` with `DROP TABLE IF EXISTS` + `CREATE TABLE` + `INSERT` statements (tables load into `master`, no `CREATE DATABASE` needed)
+2. Push to `main` — CI builds and pushes the new tag automatically
 
-## Adding a New Schema
-
-1. Create `databases/<name>/init.sql` with `DROP TABLE IF EXISTS` + `CREATE TABLE` + `INSERT` statements
-2. Push to `main` — CI detects the new folder and builds automatically
-
-## CI / GHCR
-
-Images are built via GitHub Actions on every push to `main`.
-The workflow only rebuilds a tag if:
-- the corresponding `databases/<name>/` folder changed, **or**
-- the tag does not yet exist in GHCR
-
-Trigger a full rebuild manually via *Actions → Run workflow*.
+See [CLAUDE.md](CLAUDE.md) for the full workflow including build verification steps.

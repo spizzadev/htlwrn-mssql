@@ -4,7 +4,19 @@
       "Bash(wc:*)",
       "Bash(docker run:*)",
       "Bash(docker exec:*)",
-      "Bash(docker rm:*)"
+      "Bash(docker rm:*)",
+      "Bash(docker build --no-cache --build-arg DB_NAME=imkerei -t htlwrn-mssql:imkerei .)",
+      "Bash(xxd:*)",
+      "Bash(docker build:*)",
+      "Bash(python3:*)",
+      "Bash(for db in airport books feuerwehr flug imkerei lager lt mensa mondial suppliers tankstelle)",
+      "Bash(do)",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
