@@ -87,7 +87,8 @@ CREATE VIEW Biene (Kennzahl,Gattung) AS
 		UNION 
 		SELECT  Arbeiterin.Kennzahl,Arbeiterin.Gattung  
 		FROM Arbeiterin ) as tmp;
-goINSERT INTO Imker VALUES(1,'Max Mustermann','1987-03-15');
+go
+INSERT INTO Imker VALUES(1,'Max Mustermann','1987-03-15');
 INSERT INTO Imker VALUES(2,'Maria von Trapp ','1905-01-26');
 INSERT INTO Imker VALUES(3,'Edmund Hillary','1919-07-20');
 INSERT INTO Imker VALUES(4,'Sylvia Plath','1932-10-27');
