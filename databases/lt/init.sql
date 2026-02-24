@@ -1,6 +1,3 @@
--- create database lt
-use lt
-
 drop table if exists lt;
 drop table if exists l;
 drop table if exists t;

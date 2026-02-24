@@ -1,9 +1,7 @@
-
-
-Drop Table Verkauf
-Drop Table Zapfsaeule
-Drop Table Tagespreis
-Drop Table Kraftstoff
+DROP TABLE IF EXISTS Verkauf;
+DROP TABLE IF EXISTS Zapfsaeule;
+DROP TABLE IF EXISTS Tagespreis;
+DROP TABLE IF EXISTS Kraftstoff;
 GO
 
 Create Table Kraftstoff(

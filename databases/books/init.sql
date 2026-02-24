@@ -1,9 +1,3 @@
-create database Books;
-go
-
-use Books;
-go
-
 drop table if exists TitlesAuthors;
 drop table if exists Titles;
 drop table if exists Authors;

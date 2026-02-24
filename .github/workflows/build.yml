@@ -1,0 +1,85 @@
+name: Build MSSQL Database Images
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - id: set-matrix
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ALL_DBS=($(ls databases/))
+
+          # On first commit or workflow_dispatch: treat all as changed
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            CHANGED="${ALL_DBS[*]}"
+          elif git rev-parse HEAD~1 >/dev/null 2>&1; then
+            CHANGED=$(git diff --name-only HEAD~1 HEAD | grep "^databases/" | cut -d/ -f2 | sort -u || true)
+          else
+            CHANGED="${ALL_DBS[*]}"
+          fi
+
+          TO_BUILD=()
+          for db in "${ALL_DBS[@]}"; do
+            # Build if database files changed
+            if echo "$CHANGED" | grep -qx "$db"; then
+              TO_BUILD+=("\"$db\"")
+              continue
+            fi
+
+            # Build if image tag does not yet exist in GHCR
+            TAG_COUNT=$(gh api \
+              "/users/${{ github.repository_owner }}/packages/container/htlwrn-mssql/versions" \
+              --jq "[.[].metadata.container.tags[] | select(. == \"$db\")] | length" \
+              2>/dev/null || echo 0)
+
+            if [ "$TAG_COUNT" = "0" ]; then
+              TO_BUILD+=("\"$db\"")
+            fi
+          done
+
+          MATRIX="[$(IFS=,; echo "${TO_BUILD[*]}")]"
+          echo "Databases to build: $MATRIX"
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+
+  build:
+    needs: detect
+    if: needs.detect.outputs.matrix != '[]' && needs.detect.outputs.matrix != ''
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        db: ${{ fromJson(needs.detect.outputs.matrix) }}
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io \
+            -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: |
+          docker build \
+            --build-arg DB_NAME=${{ matrix.db }} \
+            -t ghcr.io/${{ github.repository_owner }}/htlwrn-mssql:${{ matrix.db }} \
+            .
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/htlwrn-mssql:${{ matrix.db }}

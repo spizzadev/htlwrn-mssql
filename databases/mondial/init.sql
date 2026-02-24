@@ -1,5 +1,3 @@
-use Mondial;
-
 DROP TABLE IF EXISTS isMember;
 DROP TABLE IF EXISTS Organization;
 DROP TABLE IF EXISTS Country;

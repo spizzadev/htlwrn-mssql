@@ -1,9 +1,6 @@
-use lagerverwaltung
-go
-
-drop table lieferung
-drop table artikel
-drop table lager
+DROP TABLE IF EXISTS lieferung;
+DROP TABLE IF EXISTS artikel;
+DROP TABLE IF EXISTS lager;
 
 go
 

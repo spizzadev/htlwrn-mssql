@@ -1,10 +1,3 @@
---use master;
---DROP DATABASE Feuerwehr;
---CREATE DATABASE Feuerwehr;
-
-USE Feuerwehr;
-
-ALTER TABLE team DROP CONSTRAINT team_person_FK;
 DROP TABLE IF EXISTS is_troop_member; 
 DROP TABLE IF EXISTS has_participated; 
 DROP TABLE IF EXISTS person; 
@@ -91,10 +84,10 @@ INSERT INTO pers_rank (rank_header, rank_base_content, pers_rank_rank_header, sa
 ('Feuerwehrmann', 'FM', NULL, 1800.00),
 ('Oberfeuerwehrmann', 'OFM', 'Feuerwehrmann', 1950.00),
 ('Hauptfeuerwehrmann', 'HFM', 'Oberfeuerwehrmann', 2100.00),
-('Löschmeister', 'LM', 'Hauptfeuerwehrmann', 2400.00),
-('Oberlöschmeister', 'OLM', 'Löschmeister', 2600.00),
-('Hauptlöschmeister', 'HLM', 'Oberlöschmeister', 2800.00),
-('Brandmeister', 'BM', 'Hauptlöschmeister', 3100.00),
+('Lï¿½schmeister', 'LM', 'Hauptfeuerwehrmann', 2400.00),
+('Oberlï¿½schmeister', 'OLM', 'Lï¿½schmeister', 2600.00),
+('Hauptlï¿½schmeister', 'HLM', 'Oberlï¿½schmeister', 2800.00),
+('Brandmeister', 'BM', 'Hauptlï¿½schmeister', 3100.00),
 ('Oberbrandmeister', 'OBM', 'Brandmeister', 3400.00),
 ('Hauptbrandmeister', 'HBM', 'Oberbrandmeister', 3700.00),
 ('Brandinspektor', 'BI', 'Hauptbrandmeister', 4100.00),
@@ -104,58 +97,58 @@ GO
 INSERT INTO team (team_id, team_nickname, pnr) VALUES
 (1, 'Tank Wien 1', NULL),
 (2, 'Pumpe Wien 1', NULL),
-(3, 'Rüst Wien 1', NULL),
+(3, 'Rï¿½st Wien 1', NULL),
 (4, 'Atemschutz Wien 1', NULL),
 (5, 'KDO Wien 1', NULL),
-(6, 'Pumpe NÖ 3', NULL);
+(6, 'Pumpe Nï¿½ 3', NULL);
 GO
 
 INSERT INTO person (pnr, first_name, last_name, Birthdate, phone, rankdate, rank_header, team_id) VALUES
 (1101, 'Thomas',  'Gruber',   '1985-03-12', '0664123401', '2010-06-01', 'Brandmeister', 1),
-(1102, 'Michael', 'Steiner',  '1990-07-22', '0664123402', '2015-05-01', 'Löschmeister', 1),
+(1102, 'Michael', 'Steiner',  '1990-07-22', '0664123402', '2015-05-01', 'Lï¿½schmeister', 1),
 (1103, 'Andreas', 'Hofer',    '1995-01-10', '0664123403', '2018-03-15', 'Oberfeuerwehrmann', 2),
 (1104, 'Lukas',   'Wagner',   '2000-11-05', '0664123404', '2020-09-01', 'Feuerwehrmann', 2),
 (1105, 'Martin',  'Bauer',    '1982-04-18', '0664123405', '2008-02-01', 'Hauptbrandmeister', 3),
 (1106, 'Daniel',  'Moser',    '1988-09-14', '0664123406', '2012-04-01', 'Oberbrandmeister', 3),
-(1107, 'Florian', 'Leitner',  '1992-02-27', '0664123407', '2016-08-01', 'Hauptlöschmeister', 4),
-(1108, 'Simon',   'Fuchs',    '1997-06-03', '0664123408', '2019-10-01', 'Löschmeister', 4),
+(1107, 'Florian', 'Leitner',  '1992-02-27', '0664123407', '2016-08-01', 'Hauptlï¿½schmeister', 4),
+(1108, 'Simon',   'Fuchs',    '1997-06-03', '0664123408', '2019-10-01', 'Lï¿½schmeister', 4),
 (1109, 'Patrick', 'Huber',    '1999-12-20', '0664123409', '2021-05-01', 'Hauptfeuerwehrmann', 1),
 (1110, 'Julian',  'Schmid',   '2001-01-09', '0664123410', '2022-06-01', 'Feuerwehrmann', 2),
 
 (1111, 'Sebastian','Pichler', '1987-05-30', '0664123411', '2011-03-01', 'Brandinspektor', 5),
-(1112, 'Gerald',   'Koller',  '1993-08-19', '0664123412', '2017-07-01', 'Oberlöschmeister', 5),
+(1112, 'Gerald',   'Koller',  '1993-08-19', '0664123412', '2017-07-01', 'Oberlï¿½schmeister', 5),
 (1113, 'Markus',   'Novak',   '1984-10-02', '0664123413', '2009-11-01', 'Abschnittsbrandinspektor', 5),
 
 (1114, 'Benjamin','Mayr',     '1996-04-07', '0664123414', '2018-09-01', 'Hauptfeuerwehrmann', 6),
 (1115, 'David',   'Eder',     '1998-03-16', '0664123415', '2019-04-01', 'Oberfeuerwehrmann', 6),
 (1116, 'Tobias',  'Auer',     '1991-01-25', '0664123416', '2014-01-01', 'Oberbrandmeister', 6),
-(1117, 'Philipp', 'Kraus',    '1989-07-11', '0664123417', '2013-05-01', 'Hauptlöschmeister', 6),
+(1117, 'Philipp', 'Kraus',    '1989-07-11', '0664123417', '2013-05-01', 'Hauptlï¿½schmeister', 6),
 
-(1118, 'Johannes','Haas',     '1994-09-09', '0664123418', '2017-02-01', 'Löschmeister', 1),
+(1118, 'Johannes','Haas',     '1994-09-09', '0664123418', '2017-02-01', 'Lï¿½schmeister', 1),
 (1119, 'Maximilian','Seidl',  '2002-02-14', '0664123419', '2023-01-01', 'Feuerwehrmann', 3),
 (1120, 'Alexander','Brunner', '1997-11-28', '0664123420', '2020-02-01', 'Hauptfeuerwehrmann', 4),
 
-(1121, 'Felix',   'Hartl',    '1990-12-01', '0664123421', '2015-10-01', 'Oberlöschmeister', 2),
+(1121, 'Felix',   'Hartl',    '1990-12-01', '0664123421', '2015-10-01', 'Oberlï¿½schmeister', 2),
 (1122, 'Matthias','Dietrich', '1986-06-06', '0664123422', '2010-01-01', 'Brandmeister', 3),
 (1123, 'Nico',    'Lang',     '1999-05-05', '0664123423', '2021-09-01', 'Oberfeuerwehrmann', 4),
 (1124, 'Raphael', 'Winter',   '1995-02-02', '0664123424', '2018-01-01', 'Hauptfeuerwehrmann', 1),
-(1125, 'Kevin',   'König',    '2000-08-08', '0664123425', '2022-03-01', 'Feuerwehrmann', 6);
+(1125, 'Kevin',   'Kï¿½nig',    '2000-08-08', '0664123425', '2022-03-01', 'Feuerwehrmann', 6);
 GO
 
 /* ----------------------------
-   TEAMLEITER setzen (jetzt existieren Personen, FK ist erfüllbar)
+   TEAMLEITER setzen (jetzt existieren Personen, FK ist erfï¿½llbar)
    ---------------------------- */
 UPDATE team SET pnr = 1101 WHERE team_id = 1;  -- Tank
 UPDATE team SET pnr = 1103 WHERE team_id = 2;  -- Pumpe
-UPDATE team SET pnr = 1105 WHERE team_id = 3;  -- Rüst
+UPDATE team SET pnr = 1105 WHERE team_id = 3;  -- Rï¿½st
 UPDATE team SET pnr = 1107 WHERE team_id = 4;  -- Atemschutz
 UPDATE team SET pnr = 1113 WHERE team_id = 5;  -- KDO
-UPDATE team SET pnr = 1116 WHERE team_id = 6;  -- NÖ
+UPDATE team SET pnr = 1116 WHERE team_id = 6;  -- Nï¿½
 GO
 
 INSERT INTO competition (Competition_id, organizer, location, category_name, start_time, end_time) VALUES
-(5101, 'ÖBFV', 'Wien', 'Bronze A', '2025-06-01 09:00:00', '2025-06-01 18:00:00'),
-(5102, 'LFV NÖ', 'St. Pölten', 'Silber A', '2025-07-05 08:30:00', '2025-07-05 17:30:00');
+(5101, 'ï¿½BFV', 'Wien', 'Bronze A', '2025-06-01 09:00:00', '2025-06-01 18:00:00'),
+(5102, 'LFV Nï¿½', 'St. Pï¿½lten', 'Silber A', '2025-07-05 08:30:00', '2025-07-05 17:30:00');
 GO
 
 INSERT INTO competitve_troop (troop_id, foundation_date, category, bonus) VALUES
