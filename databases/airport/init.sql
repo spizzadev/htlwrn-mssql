@@ -1,7 +1,7 @@
 drop table if exists Airline_contact_number;
 drop table if exists Passenger_requirements;
-drop table if exists Passenger_catogary;
-drop table if exists Flight_shedule_date;
+drop table if exists Passenger_category;
+drop table if exists Flight_schedule_date;
 drop table if exists Flight_leg_departure;
 drop table if exists Flight_leg_arrival;
 drop table if exists Passenger_B;
@@ -51,16 +51,16 @@ CREATE TABLE Aircrew
 	Last_name varchar (25) null,
 	Date_of_Birth date not null,
 	Gender varchar(10) not null,
-	Crew_catogary varchar(20) not null,
+	Crew_category varchar(20) not null,
 	Contact_number varchar(15) not null,
 	Passport_number varchar(10) not null,
 	Join_date date not null,
 	Employee_details varchar (200) null,
-	Expirience_years int null,
+	Experience_years int null,
 	Airline_code char(5) not null,
 	CONSTRAINT pk_Staff_ID PRIMARY KEY (Staff_ID),
 	CONSTRAINT uq_Passport_number UNIQUE (Passport_number),
-	CONSTRAINT chk_Expirience_years CHECK (Expirience_years>1),
+	CONSTRAINT chk_Experience_years CHECK (Experience_years>1),
 	CONSTRAINT fk_Aircrew_Airline_code FOREIGN KEY (Airline_code) REFERENCES Airline (Airline_code)
 )
 
@@ -104,7 +104,7 @@ CREATE TABLE Flight_leg_A
 	CONSTRAINT pk_Flight_leg_A PRIMARY KEY (Leg_number),
 	CONSTRAINT fk_Aircraft_code FOREIGN KEY (Aircraft_code) REFERENCES  Aircraft (Aircraft_code),
 	CONSTRAINT fk_Staff_ID FOREIGN KEY (Staff_ID) REFERENCES Aircrew (Staff_ID),
-	CONSTRAINT uq_Arrivar_terminal_number UNIQUE (Arrival_teminal_number)
+	CONSTRAINT uq_Arrival_terminal_number UNIQUE (Arrival_teminal_number)
 ) 
 
 CREATE TABLE Flight_leg_B 
@@ -124,7 +124,7 @@ CREATE TABLE Passenger_A
 	Minit varchar(5),
 	Last_name varchar(20),
 	Gender varchar(10) not null,
-	Nationalty varchar(20) not null,
+	Nationality varchar(20) not null,
 	Date_of_Birth date not null,
 	Date_of_Issue date not null,
 	Date_of_Expire date not null,
@@ -144,7 +144,7 @@ CREATE TABLE Passenger_B
 	Check_in_time Time null,
 	Seat_number varchar(6) null,
 	CONSTRAINT pk_Passenger_B PRIMARY KEY(Leg_number,Air_ticket_number),
-	CONSTRAINT fk_Leg_number FOREIGN KEY(Leg_number) REFERENCES Flight_leg_A(Leg_number),
+	CONSTRAINT fk_Leg_number FOREIGN KEY(Leg_number) REFERENCES Flight_leg_A(Leg_number)
 )
 
 CREATE TABLE Flight_leg_arrival
@@ -164,22 +164,22 @@ CREATE TABLE Flight_leg_departure
 	CONSTRAINT fk_Flight_leg_departurel FOREIGN KEY(Leg_number) REFERENCES Flight_leg_A(Leg_number)
 )
 
-CREATE TABLE Flight_shedule_date
+CREATE TABLE Flight_schedule_date
 (
 	Flight_number char(5) not null,
 	Date date not null,
-	CONSTRAINT pk_Flight_shedule_date PRIMARY KEY (Flight_number,Date),
+	CONSTRAINT pk_Flight_schedule_date PRIMARY KEY (Flight_number,Date),
 	CONSTRAINT fk_Flight_number FOREIGN KEY (Flight_number) REFERENCES Flight (Flight_number)
 )
 
 
 
 
-CREATE TABLE Passenger_catogary
+CREATE TABLE Passenger_category
 (
 	Passport_number char(10) not null,
-	Passenger_catogary varchar(30) not null,
-	CONSTRAINT pk_Passenger_catogary PRIMARY KEY (Passport_number,Passenger_catogary),
+	Passenger_category varchar(30) not null,
+	CONSTRAINT pk_Passenger_category PRIMARY KEY (Passport_number,Passenger_category),
 	CONSTRAINT fk_Passport_number FOREIGN KEY (Passport_number) REFERENCES Passenger_A (Passport_number)
 )
 
@@ -201,7 +201,7 @@ CREATE TABLE Airline_contact_number
 	Airline_code char (5) not null,
 	Contact_number1 varchar(15) not null,
 	Contact_number2 varchar(15) null,
-	COntact_number3 varchar(15) null,
+	Contact_number3 varchar(15) null,
 	CONSTRAINT pk_Airline_contact_number PRIMARY KEY (Airline_code,Contact_number1),
 	CONSTRAINT fk_Airline_contact_number_Airline_code FOREIGN KEY (Airline_code) REFERENCES Airline(Airline_code)
 )
@@ -356,28 +356,28 @@ insert into Flight_leg_departure values('dpr4325526','bor009','ga003')
 insert into Flight_leg_departure values('dpr6545526','bor010','ga003')
 
 
-insert into Flight_shedule_date values('A1235','2018-12-21')
-insert into Flight_shedule_date values('A7566','2018-12-21')
-insert into Flight_shedule_date values('A9877','2018-12-22')
-insert into Flight_shedule_date values('B4375','2018-12-22')
-insert into Flight_shedule_date values('C7561','2018-12-22')
-insert into Flight_shedule_date values('D1375','2018-12-22')
-insert into Flight_shedule_date values('F4367','2018-12-21')
-insert into Flight_shedule_date values('G9880','2018-12-21')
-insert into Flight_shedule_date values('H1256','2018-12-21')
-insert into Flight_shedule_date values('M1434','2018-12-21')
+insert into Flight_schedule_date values('A1235','2018-12-21')
+insert into Flight_schedule_date values('A7566','2018-12-21')
+insert into Flight_schedule_date values('A9877','2018-12-22')
+insert into Flight_schedule_date values('B4375','2018-12-22')
+insert into Flight_schedule_date values('C7561','2018-12-22')
+insert into Flight_schedule_date values('D1375','2018-12-22')
+insert into Flight_schedule_date values('F4367','2018-12-21')
+insert into Flight_schedule_date values('G9880','2018-12-21')
+insert into Flight_schedule_date values('H1256','2018-12-21')
+insert into Flight_schedule_date values('M1434','2018-12-21')
 
 
-insert into Passenger_catogary values ('M100123456','Adult')
-insert into Passenger_catogary values ('M100123457','Adult')
-insert into Passenger_catogary values ('M100123458','Adult')
-insert into Passenger_catogary values ('M100123459','Adult')
-insert into Passenger_catogary values ('M100123460','Children')
-insert into Passenger_catogary values ('M100123461','Adult')
-insert into Passenger_catogary values ('M100123462','Adult')
-insert into Passenger_catogary values ('M100123463','Adult')
-insert into Passenger_catogary values ('M100123464','Infant')
-insert into Passenger_catogary values ('M100123465','Adult')
+insert into Passenger_category values ('M100123456','Adult')
+insert into Passenger_category values ('M100123457','Adult')
+insert into Passenger_category values ('M100123458','Adult')
+insert into Passenger_category values ('M100123459','Adult')
+insert into Passenger_category values ('M100123460','Children')
+insert into Passenger_category values ('M100123461','Adult')
+insert into Passenger_category values ('M100123462','Adult')
+insert into Passenger_category values ('M100123463','Adult')
+insert into Passenger_category values ('M100123464','Infant')
+insert into Passenger_category values ('M100123465','Adult')
 
 
 insert into Passenger_requirements values('M100123456','Need mobility equipment')

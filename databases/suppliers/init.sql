@@ -21,7 +21,7 @@ create table SupplierParts
 (
 SupplierID char(2) references Suppliers(SupplierID),
 PartID char(2) references Parts(PartID),
-Amount decimal(4)
+Amount decimal(4),
 primary key (SupplierID, PartID)
 );
 go
