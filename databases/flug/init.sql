@@ -54,7 +54,7 @@ go
 
 insert into pilot values (1, 'Huber','Susi',null,'5104140350')
 insert into pilot values (2, 'Maier','Karl',null,'3216230124')
-insert into pilot values (3, 'Müller','Anton',null,'1519270386')
+insert into pilot values (3, 'MÃ¼ller','Anton',null,'1519270386')
 
 insert into ftype values (1, 'B737', 15000,230)
 insert into ftype values (2, 'A320', 12000,120)
@@ -66,7 +66,7 @@ insert into flugzeug values (3,'OE657','2011-05-23', 2)
 insert into flughafen values (1, 'AAL','Denmark')
 insert into flughafen values (2, 'ADL','Australien')
 insert into flughafen values (3, 'AGX','Indien')
-insert into flughafen values (4, 'VIE','Österreich')
+insert into flughafen values (4, 'VIE','Ã–sterreich')
 
 insert into flug values (1,1,2)
 insert into flug values (2,2,1)

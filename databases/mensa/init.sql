@@ -94,7 +94,8 @@ create table liefert(
 	LiefNr int references Lieferant,
     primary key(ZutatenNr,LiefNr),
 )
-goinsert into lieferant values(1,'Lieferant1','1010','Wien','Wienerstr.123','01/123456')
+go
+insert into lieferant values(1,'Lieferant1','1010','Wien','Wienerstr.123','01/123456')
 insert into lieferant values(2,'Lieferant2','1020','Wien','Grazerstr.123','01/78964')
 insert into lieferant values(3,'Lieferant3','1030','Wien','Grazerstr.123','01/143215')
 go
@@ -116,20 +117,20 @@ insert into menue values(77,2,6)
 go
 
 insert into speise values(100,'Nudelsuppe',1)
-insert into speise values(101,'Gemüsesuppe',1)
+insert into speise values(101,'GemÃ¼sesuppe',1)
 insert into speise values(102,'Knoblauchcremesuppe',1)
 insert into speise values(103,'Zucchinicremesuppe',1)
 insert into speise values(104,'Wiener Schnitzel mit Salzkartoffel',2)
 insert into speise values(105,'Rindsgulasch mit Bandnudeln',2)
-insert into speise values(106,'Faschierte Laibchen mit Kartoffelpürree',2)
-insert into speise values(107,'Leberkäse mit Spinat',2)
-insert into speise values(108,'Gemüsestrudel',2)
+insert into speise values(106,'Faschierte Laibchen mit KartoffelpÃ¼rree',2)
+insert into speise values(107,'LeberkÃ¤se mit Spinat',2)
+insert into speise values(108,'GemÃ¼sestrudel',2)
 insert into speise values(109,'Pudding',3)
 insert into speise values(110,'Apfelkuchen',3)
 insert into speise values(111,'Kakaoroulade',3)
 insert into speise values(112,'gemischtes Eis',3)
 insert into speise values(113,'Traubenschnitte',3)
-insert into speise values(114,'frische Früchte',3)
+insert into speise values(114,'frische FrÃ¼chte',3)
 go
 
 
@@ -145,11 +146,11 @@ insert into zutat values (9,'Schweinsschnitzel','kg',1.2,16)
 insert into zutat values (10,'Faschiertes gemischt','kg',1.2,16)
 insert into zutat values (11,'Bandnudeln','kg',1.2,16)
 insert into zutat values (12,'Milch','l',1.1,40)
-insert into zutat values (13,'Äpfel','kg',1.2,30)
+insert into zutat values (13,'Ã„pfel','kg',1.2,30)
 insert into zutat values (14,'Eier','Stk',0.10,80)
 insert into zutat values (15,'Rindsgulaschfleisch','kg',1.8,50)
 insert into zutat values (16,'Zwiebel','kg',1.8,20)
-insert into zutat values (17,'Leberkäse','kg',1.7,20)
+insert into zutat values (17,'LeberkÃ¤se','kg',1.7,20)
 insert into zutat values (18,'Cremespinat','kg',1.5,18)
 insert into zutat values (19,'Zucker','kg',0.9,90)
 insert into zutat values (20,'Kakao','kg',2.5,9)
