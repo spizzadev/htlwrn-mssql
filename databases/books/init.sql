@@ -7,6 +7,7 @@ create table Titles (
   ISBN10   char(10)    not null primary key
 , Title    varchar(48) not null
 , Language char(2)     not null
+, price    int         not null
 );
 
 create table Authors (
@@ -56,29 +57,29 @@ go
 begin transaction;
 
 insert titles
-  (ISBN10,       Title                                 , Language)
+  (ISBN10,       Title                                 , Language, price)
 values
-  ('014241493X', 'Paper Towns'                         ,     'en')
-, ('0416199259', 'The Tao of Pooh and the Te of Piglet',     'en')
-, ('0931137071', 'The Tao of Programming'              ,     'de')
-, ('1405223103', 'You''re a Bad Man, Mr Gum!'          ,     'en')
-, ('3257238606', 'Maigret und der Clochard'            ,     'de')
-, ('3423107421', 'Der Ritter, den es nicht gab'        ,     'de')
-, ('3423114118', 'Die Wasserfälle von Slunj'           ,     'de')
-, ('3423131608', 'Der schwedische Reiter'              ,     'de')
-, ('3423135794', 'Die dritte Kugel'                    ,     'de')
-, ('3423136200', 'Reise im Mondlicht'                  ,     'de')
-, ('3423138726', 'Selina oder Das andere Leben'        ,     'de')
-, ('3426601001', 'Das Mangobaumwunder'                 ,     'de')
-, ('3442453305', 'Herr Lehmann'                        ,     'de')
-, ('3442730503', 'Naokos Lächeln'                      ,     'de')
-, ('3446234772', 'Margos Spuren'                       ,     'de')
-, ('3462034901', 'Die Geschichte von der 1002. Nacht'  ,     'de')
-, ('3518395041', 'Der arme Verschwender'               ,     'de')
-, ('3551789762', 'Von der Natur des Menschen'          ,     'de')
-, ('3630620124', 'Rashomon'                            ,     'de')
-, ('374665632X', 'Der falsche Nero'                    ,     'de')
-, ('3746656362', 'Goya'                                ,     'de')
+  ('014241493X', 'Paper Towns'                         ,     'en', 5)
+, ('0416199259', 'The Tao of Pooh and the Te of Piglet',     'en', 10)
+, ('0931137071', 'The Tao of Programming'              ,     'de', 12)
+, ('1405223103', 'You''re a Bad Man, Mr Gum!'          ,     'en', 11)
+, ('3257238606', 'Maigret und der Clochard'            ,     'de', 18)
+, ('3423107421', 'Der Ritter, den es nicht gab'        ,     'de', 20)
+, ('3423114118', 'Die Wasserfälle von Slunj'           ,     'de', 11)
+, ('3423131608', 'Der schwedische Reiter'              ,     'de', 6)
+, ('3423135794', 'Die dritte Kugel'                    ,     'de', 8)
+, ('3423136200', 'Reise im Mondlicht'                  ,     'de', 10)
+, ('3423138726', 'Selina oder Das andere Leben'        ,     'de', 29)
+, ('3426601001', 'Das Mangobaumwunder'                 ,     'de', 19)
+, ('3442453305', 'Herr Lehmann'                        ,     'de', 14)
+, ('3442730503', 'Naokos Lächeln'                      ,     'de', 15)
+, ('3446234772', 'Margos Spuren'                       ,     'de', 17)
+, ('3462034901', 'Die Geschichte von der 1002. Nacht'  ,     'de', 20)
+, ('3518395041', 'Der arme Verschwender'               ,     'de', 19)
+, ('3551789762', 'Von der Natur des Menschen'          ,     'de', 18)
+, ('3630620124', 'Rashomon'                            ,     'de', 4)
+, ('374665632X', 'Der falsche Nero'                    ,     'de', 6)
+, ('3746656362', 'Goya'                                ,     'de', 9)
 ;
 
 commit;
