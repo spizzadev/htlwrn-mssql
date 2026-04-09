@@ -2,7 +2,7 @@ name: Build Singleton MSSQL Image
 
 on:
   push:
-    branches: [singleton]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
