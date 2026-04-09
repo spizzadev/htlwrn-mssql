@@ -1,0 +1,39 @@
+name: Build Singleton MSSQL Image
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io \
+            -u ${{ github.actor }} --password-stdin
+
+      - name: Get commit timestamp
+        id: timestamp
+        run: echo "value=$(git log -1 --format='%ci')" >> $GITHUB_OUTPUT
+
+      - name: Build singleton image
+        env:
+          COMMIT_TS: ${{ steps.timestamp.outputs.value }}
+        run: |
+          docker build \
+            --build-arg COMMIT_TIMESTAMP="$COMMIT_TS" \
+            -f Dockerfile.singleton \
+            -t ghcr.io/${{ github.repository_owner }}/htlwrn-mssql:latest \
+            .
+
+      - name: Push singleton image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/htlwrn-mssql:latest
