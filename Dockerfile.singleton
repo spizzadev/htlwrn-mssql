@@ -10,8 +10,45 @@ COPY databases/ /build/databases/
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Generate per-DB prefixed SQL scripts
+RUN mkdir -p /initdb && \
+    for dir in /build/databases/*/; do \
+        name=$(basename "$dir"); \
+        script="/initdb/${name}.sql"; \
+        printf 'CREATE DATABASE [%s];\nGO\nUSE [%s];\nGO\n' "$name" "$name" > "$script"; \
+        cat "${dir}init.sql" >> "$script"; \
+    done
+
+# Record build metadata
 RUN printf '%s' "${COMMIT_TIMESTAMP}" > /commit_timestamp.txt && \
-    ls /build/databases/ | sort > /available_databases.txt
+    ls /initdb/ | sed 's/\.sql$//' | sort > /available_databases.txt
+
+# Bake all databases at build time
+RUN bash -c '\
+    /opt/mssql/bin/sqlservr & \
+    MSSQL_PID=$! && \
+    echo "Waiting for SQL Server..." && \
+    for i in $(seq 1 30); do \
+      /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$MSSQL_SA_PASSWORD" \
+        -Q "SELECT 1" -C -l 1 >/dev/null 2>&1 && break; \
+      echo "  attempt $i/30..."; \
+      sleep 2; \
+    done && \
+    for script in /initdb/*.sql; do \
+      dbname=$(basename "$script" .sql); \
+      echo "Importing $dbname..."; \
+      /opt/mssql-tools18/bin/sqlcmd \
+        -S localhost -U sa -P "$MSSQL_SA_PASSWORD" \
+        -i "$script" -C; \
+    done && \
+    echo "Stopping SQL Server..." && \
+    kill $MSSQL_PID && \
+    sleep 10'
+
+HEALTHCHECK --interval=5s --timeout=3s --retries=12 \
+    CMD /opt/mssql-tools18/bin/sqlcmd \
+        -S localhost -U sa -P "${MSSQL_SA_PASSWORD}" \
+        -Q "SELECT 1" -C -l 1 > /dev/null 2>&1
 
 EXPOSE 1433
 ENTRYPOINT ["/entrypoint.sh"]
