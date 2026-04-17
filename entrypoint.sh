@@ -31,6 +31,13 @@ while [ "$i" -lt 30 ]; do
     sleep 2
 done
 
+printf 'Loading %s...\n' "$DB_ARG"
+printf 'CREATE DATABASE [%s];\nGO\nUSE [%s];\nGO\n' "$DB_ARG" "$DB_ARG" > /tmp/db_init.sql
+cat "/build/databases/$DB_ARG/init.sql" >> /tmp/db_init.sql
+/opt/mssql-tools18/bin/sqlcmd \
+    -S localhost -U sa -P "$MSSQL_SA_PASSWORD" \
+    -i /tmp/db_init.sql -C
+
 /opt/mssql-tools18/bin/sqlcmd \
     -S localhost -U sa -P "$MSSQL_SA_PASSWORD" \
     -Q "ALTER LOGIN sa WITH DEFAULT_DATABASE = [$DB_ARG];" -C
