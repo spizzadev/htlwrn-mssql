@@ -1,47 +1,56 @@
 # htlwrn-mssql
 
-Pre-seeded MSSQL 2022 Docker images for database exercises. Pull an image and connect — the data is already there.
+Pre-seeded Microsoft SQL Server 2022 images for database exercises. Schema and data are baked in at build time — pull the image and start querying immediately.
 
-## Images
+## Usage
 
-### `:latest` — all databases in one image
+### All databases — `:latest`
 
-Pass the database name as the first argument. Shows the build timestamp on startup; prints a help message listing all available databases if the argument is missing or invalid.
-
-```bash
-docker run -p 1433:1433 --rm ghcr.io/OWNER/htlwrn-mssql:latest hr
-```
-
-### Per-database tags
-
-Each tag is a minimal image with a single pre-loaded database:
+One image containing all databases. Each database lives in its own named SQL Server database.
 
 ```bash
-docker run -p 1433:1433 --rm ghcr.io/OWNER/htlwrn-mssql:feuerwehr
+docker run -d -p 1433:1433 ghcr.io/spizzadev/htlwrn-mssql:latest
 ```
 
-Replace `OWNER` with the GitHub username hosting this repo.
+Connect to a specific database:
 
-## Connect
-
-```
-Server:    localhost,1433
-User:      sa
-Password:  Htlwrn_1
+```bash
+sqlcmd -S localhost,1433 -U sa -P Htlwrn_1 -d hr
 ```
 
-Per-database tags use `master` as the default database. With `:latest`, the selected database is set as default automatically.
+The container prints the list of available databases and the build timestamp on startup.
+
+### Single database — `:<name>`
+
+Lightweight images with one database pre-loaded into `master`.
+
+```bash
+docker run -d -p 1433:1433 ghcr.io/spizzadev/htlwrn-mssql:hr
+```
+
+```bash
+sqlcmd -S localhost,1433 -U sa -P Htlwrn_1
+```
+
+## Connection Details
+
+| | |
+|-|-|
+| **Server** | `localhost,1433` |
+| **User** | `sa` |
+| **Password** | `Htlwrn_1` |
 
 ## Available Databases
 
-| Name | Tables |
-|------|--------|
+| Database | Tables |
+|----------|--------|
 | `airport` | Airline, Aircrew, Aircraft, Flight, Flight_leg, Passenger, Flight_schedule_date |
 | `books` | Authors, Titles, TitlesAuthors |
 | `feuerwehr` | competition, team, person, competitive_troop, pers_rank, is_troop_member, has_participated |
 | `flug` | pilot, ftype, flugzeug, flughafen, flug, fliegt |
 | `hr` | regions, countries, locations, departments, jobs, employees, job_history, emp_audit |
 | `imkerei` | Imker, Bienenstock, Koenigin, Arbeiterin, Brutnest, Feld, Landwirtschaftsbetrieb |
+| `kfz` | Kunde, Fahrzeug, Vermietung, Serviceeintrag, Protokoll |
 | `lager` | artikel, lager, lieferung |
 | `lt` | l, t, lt |
 | `mensa` | speise, zutat, menue, lieferant, tag, bestellung, bestellposition, serviert |
@@ -50,9 +59,6 @@ Per-database tags use `master` as the default database. With `:latest`, the sele
 | `suppliers` | Suppliers, Parts, SupplierParts |
 | `tankstelle` | Kraftstoff, Tagespreis, Zapfsaeule, Verkauf |
 
-## Adding a New Database
+## License
 
-1. Create `databases/<name>/init.sql` with `DROP TABLE IF EXISTS` + `CREATE TABLE` + `INSERT` statements — no `CREATE DATABASE` or `USE` needed
-2. Push to `main` — CI builds the per-database tag **and** rebuilds `:latest` automatically
-
-See [CLAUDE.md](CLAUDE.md) for the full workflow and build verification steps.
+MIT — see [LICENSE](LICENSE)
