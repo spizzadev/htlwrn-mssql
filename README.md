@@ -15,7 +15,7 @@ docker run -d -p 1433:1433 ghcr.io/spizzadev/htlwrn-mssql:latest
 Connect to a specific database:
 
 ```bash
-sqlcmd -S localhost,1433 -U sa -P Htlwrn_1 -d hr
+sqlcmd -S localhost -U sa -P Htlwrn_1 -d hr
 ```
 
 The container prints the list of available databases and the build timestamp on startup.
@@ -29,14 +29,14 @@ docker run -d -p 1433:1433 ghcr.io/spizzadev/htlwrn-mssql:hr
 ```
 
 ```bash
-sqlcmd -S localhost,1433 -U sa -P Htlwrn_1
+sqlcmd -S localhost -U sa -P Htlwrn_1
 ```
 
 ## Connection Details
 
 | | |
 |-|-|
-| **Server** | `localhost,1433` |
+| **Server** | `localhost` |
 | **User** | `sa` |
 | **Password** | `Htlwrn_1` |
 
