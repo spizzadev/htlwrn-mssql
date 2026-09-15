@@ -48,6 +48,7 @@ sqlcmd -S localhost -U sa -P Htlwrn_1
 | `books` | Authors, Titles, TitlesAuthors |
 | `feuerwehr` | competition, team, person, competitive_troop, pers_rank, is_troop_member, has_participated |
 | `flug` | pilot, ftype, flugzeug, flughafen, flug, fliegt |
+| `haustiere` | Haustier, Besitzer, Unternehmen, Tour, Hund, Katze, Wasserschwein, Etappe, Pfleger, kundevon, angemeldet, Beziehung, laufen |
 | `hr` | regions, countries, locations, departments, jobs, employees, job_history, emp_audit |
 | `imkerei` | Imker, Bienenstock, Koenigin, Arbeiterin, Brutnest, Feld, Landwirtschaftsbetrieb |
 | `kfz` | Kunde, Fahrzeug, Vermietung, Serviceeintrag, Protokoll |
