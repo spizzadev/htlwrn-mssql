@@ -55,7 +55,7 @@ sqlcmd -S localhost -U sa -P Htlwrn_1
 | `lager` | artikel, lager, lieferung |
 | `lt` | l, t, lt |
 | `mensa` | speise, zutat, menue, lieferant, tag, bestellung, bestellposition, serviert |
-| `mondial` | Country, Organization, isMember |
+| `mondial` | Country, Continent, Mountain, Desert, Island, Sea, Lake, Sublanguage, Province, City, Economy, Population, Politics, Religion, EthnicGroup, Language, Countrypops, Countryothername, Countrylocalname, Provpops, Provinceothername, Provincelocalname, Citypops, Cityothername, Citylocalname, borders, encompasses, Organization, isMember, River, RiverThrough, geo_Mountain, geo_Desert, geo_Island, geo_River, geo_Sea, geo_Lake, geo_Source, geo_Estuary, mergesWith, located, locatedOn, islandIn, MountainOnIsland, LakeOnIsland, RiverOnIsland, Airport |
 | `orders` | Customer, Product, Inventory, Orders, OrderLine, StockMovement, AuditLog |
 | `suppliers` | Suppliers, Parts, SupplierParts |
 | `tankstelle` | Kraftstoff, Tagespreis, Zapfsaeule, Verkauf |
